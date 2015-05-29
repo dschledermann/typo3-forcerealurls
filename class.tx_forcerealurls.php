@@ -3,10 +3,7 @@
 class tx_forcerealurls {
 
 	function check($params,$pObj) {
-		if ($pObj->siteScript && $pObj->config['config']['tx_realurl_enable'] && (
-			substr($pObj->siteScript, 0, 9) == 'index.php' ||
-			substr($pObj->siteScript, 0, 1) == '?'
-		)) {
+		if ($pObj->siteScript && $pObj->config['config']['tx_realurl_enable'] && substr($pObj->siteScript, 0, 9) == 'index.php') {
 			$extConf = unserialize($GLOBALS['TYPO3_CONF_VARS']['EXT']['extConf']['forcerealurls']);
 
 			// Skipping section
@@ -37,12 +34,13 @@ class tx_forcerealurls {
 			$LD = $pObj->tmpl->linkData($pObj->page,'',false,'','',$queryString);
 			$url = $baseURL.$LD['totalURL'];
 
-			// Cleanup for some reason sometimes two / are used in the end.
-			// Removing this
+			// Cleanup for some reason sometimes excessive / are used in the end of the path and/or baseurl.
+			// Removing this as this is an error.
 			$url = preg_replace("|//$|", "/", $url);
+			$url = rtrim($baseURL, '/') . '/' . ltrim($LD['totalURL'], '/');
 
 			header('HTTP/1.1 301 Moved Permanently');
-			header('Location: '.$url);
+			header('Location: ' . $url);
 			header('X-Redirected-By: forcerealurls');
 
 			exit;

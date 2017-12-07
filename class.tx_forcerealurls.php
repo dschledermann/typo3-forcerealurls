@@ -12,7 +12,7 @@ class tx_forcerealurls {
 			}
 
 			$query = array();
-			parse_str(t3lib_div::getIndpEnv('QUERY_STRING'), $query);
+			parse_str(\TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('QUERY_STRING'), $query);
 
 			if ($extConf['skip_if_no_cache'] && $query['no_cache']) {
 				return;

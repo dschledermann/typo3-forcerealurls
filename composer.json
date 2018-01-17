@@ -2,5 +2,10 @@
     "name": "dschledermann/forcerealurls",
     "description": "Checks if a page is trying to be accessed by an old style URL, and does a 301 redirect to the appropriate URL if so",
     "type": "typo3-cms-extension",
-    "version": "0.1.0"
+    "version": "0.1.1",
+    "autoload": {
+     "classmap": [
+      "class.tx_forcerealurls.php"
+     ]
+    }
 }
